@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <!-- <head> -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{.Equipment.ModelName}} - Подробно</title>
+        <link rel="preconnect" href="https://googleapis.com">
+        <link rel="preconnect" href="https://gstatic.com" crossorigin>
+        <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/solar_style.css">
+    </head>
+
+    <body>
+        
+        <!-- Header с кнопкой Домой -->
+        <header>
+            <a href="/" class="home-link">🏠 Домой</a>
+        </header>
+        <p></p>
+    
+        <div>
+            <!-- Запуск видео в стиле Vibes -->
+            <video autoplay muted loop playsinline class="vibes-video">
+                <source src="http://localhost:9000/solar/{{.Equipment.VideoKey}}" type="video/webm">
+                Ваш браузер не поддерживает видео
+            </video>
+            <div class="vibes-overlay">
+                <div class="vibes-specs">
+                    <img src="http://localhost:9000/solar/{{.Equipment.ImageKey}}" class="row-thumb-card" alt="{{.Equipment.ModelName}}">
+                    <div>
+                        <h2 class="vibes-title">{{.Equipment.ModelName}}</h2>
+                        <p class="vibes-title">Мощность(Вт)/Емкость(Ач): {{.Equipment.CapacityPower}}</p>
+                        <p class="vibes-title">Цена: {{.Equipment.Price}} ₽</p>
+                    
+                        <!-- Форма добавления в черновик для ЛР2 -->
+                        <form action="/request/add" method="POST" class="add-to-cart-form" width="80px" style="margin-top: 15px;">
+                            <!-- Скрытый ID текущего оборудования -->
+                            <input type="hidden" name="equipment_id" value="{{.Equipment.ID}}">
+                            <!-- Дефолтный ID заявки (как в базе данных) -->
+                            <input type="hidden" name="request_id" value="101">
+                            
+                            <label for="quantity" width="80px" style="color: #fff; font-size: 14px; margin-right: 5px;">Кол-во:</label>
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" width="80px" class="control-group">
+                            <p></p>                            
+                            <button type="submit" width="80px" class="card-button">
+                                ➕ Добавить в заявку
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <p class="vibes-description">{{.Equipment.Description}}</p>
+            </div>
+        </div>
+    </body>
+</html>

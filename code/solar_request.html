@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Состав заявки #{{.RequestID}}</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/solar_style.css">
+</head>
+<body>
+    <!-- Header с кнопкой Домой -->
+    <header>
+        <a href="/" class="home-link">🏠 Домой</a>
+    </header>
+    <p></p>
+    
+    <main class="container">
+        <!-- Информация о самой заявке -->
+        <section class="request-summary">
+            <div class="calc-result"><strong>Заявка №{{.RequestID}}</strong></div>
+            <div class="result-box">
+                <div><strong>Статус: в обработке </strong></div>
+                <div><strong> Услуг: {{.CartCount}}</strong></div>
+                        
+                <!-- Поле результата вычислений (из задания: пока готовое значение) -->
+                <div><strong>Итоговая прогнозная генерация:</strong></div> 
+                <div><strong><input type="number" value="4.2" readonly> кВт*ч/сутки</strong></div>
+            </div>
+            <p></p>
+
+            <table border="1" style="border-collapse: collapse; width: 90%;">
+                <thead class="item-price">
+                    <tr>
+                        <th style="text-align: left;">Услуга</th>
+                        <th style="text-align: left;">Мощность(Вт)/Емкость(Ач)</th>
+                        <th style="text-align: left;">Цена</th>
+                        <th style="text-align: left;">Количество</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- Список услуг в составе заявки -->
+                    {{range .CartItems}}
+                    <tr>
+                        <td style="align-items: normal;">
+                            <!-- Картинка услуги из Minio -->
+                            <img src="http://localhost:9000/solar/{{.ImageKey}}" class="row-thumb" alt="icon">
+                
+                            <!-- Поля услуги слева направо в 1 строку -->
+                            <span class="item-spec">{{.ModelName}}</span>
+                        </td>
+                        <td class="item-spec">{{.CapacityPower}}</td>
+                        <td class="item-price">{{.Price}} ₽</td>
+                                        
+                        <!-- Поля м-м (количество/комментарий и т.д.) -->
+                        <td>    
+                            <span class="control-group">
+                                <input type="number" value="{{.Quantity}}" readonly>
+                            </span>
+                        </td>
+
+                        <!-- Колонка с кнопкой логического удаления для ЛР2 -->
+                        <td>
+                            <form action="/request/delete" method="POST" style="margin: 0; display: inline;">
+                                <!-- Передаем ID связующей строки из базы данных -->
+                                <input type="hidden" name="id" value="{{.CapacityPowerStr.ID}}">
+                                <!-- Передаем ID текущей корзины для корректного редиректа обратно -->
+                                <input type="hidden" name="request_id" value="{{.CapacityPowerStr.RequestID}}">
+                                <button type="submit" class="card-button">
+                                    🗑️ Удалить
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>        
+        </section>
+    </main>
+</body>
+</html>
+
