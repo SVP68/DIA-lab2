@@ -20,12 +20,27 @@
         <section class="request-summary">
             <div class="calc-result"><strong>Заявка №{{.RequestID}}</strong></div>
             <div class="result-box">
-                <div><strong>Статус: в обработке </strong></div>
+                <div><strong>Статус: {{.Status}} </strong></div>
                 <div><strong> Услуг: {{.CartCount}}</strong></div>
                         
                 <!-- Поле результата вычислений (из задания: пока готовое значение) -->
-                <div><strong>Итоговая прогнозная генерация:</strong></div> 
-                <div><strong><input type="number" value="4.2" readonly> кВт*ч/сутки</strong></div>
+                <div><strong>Широта местности: </strong></div>
+                <div><strong><input type="number" value="45" readonly> </strong></div>
+                <div><strong>Итоговая прогнозная генерация: </strong></div> 
+                <div><strong><input type="number" value="4.2" readonly> кВт*ч/год</strong></div>
+                            
+                <!-- Колонка с кнопкой логического удаления для ЛР2 ->
+                <div>
+                    <form action="/request/delete_request" method="POST" style="margin: 0; display: inline;">
+                    <!- Передаем ID текущей корзины для корректного редиректа обратно ->
+                    <input type="hidden" name="id" value="{{.RequestID}}">
+                    <button type="submit" class="card-button">
+                    🗑️ Удалить заявку
+                    </button>
+                    </form>
+                </div>
+                -->
+
             </div>
             <p></p>
 
@@ -33,7 +48,8 @@
                 <thead class="item-price">
                     <tr>
                         <th style="text-align: left;">Услуга</th>
-                        <th style="text-align: left;">Мощность(Вт)/Емкость(Ач)</th>
+                        <th style="text-align: left;">Мощность(Вт)</th>
+                        <th style="text-align: left;">Емкость(Ач)</th>
                         <th style="text-align: left;">Цена</th>
                         <th style="text-align: left;">Количество</th>
                     </tr>
@@ -51,7 +67,8 @@
                             <!-- Поля услуги слева направо в 1 строку -->
                             <span class="item-spec">{{.ModelName}}</span>
                         </td>
-                        <td class="item-spec">{{.CapacityPower}}</td>
+                        <td class="item-spec">{{.Power}}</td>
+                        <td class="item-spec">{{.Capacity}}</td>
                         <td class="item-price">{{.Price}} ₽</td>
                                         
                         <!-- Поля м-м (количество/комментарий и т.д.) -->
@@ -65,9 +82,9 @@
                         <td>
                             <form action="/request/delete" method="POST" style="margin: 0; display: inline;">
                                 <!-- Передаем ID связующей строки из базы данных -->
-                                <input type="hidden" name="id" value="{{.CapacityPowerStr.ID}}">
+                                <input type="hidden" name="id" value="{{.SolarRequestStr.ID}}">
                                 <!-- Передаем ID текущей корзины для корректного редиректа обратно -->
-                                <input type="hidden" name="request_id" value="{{.CapacityPowerStr.RequestID}}">
+                                <input type="hidden" name="request_id" value="{{.SolarRequestStr.RequestID}}">
                                 <button type="submit" class="card-button">
                                     🗑️ Удалить
                                 </button>

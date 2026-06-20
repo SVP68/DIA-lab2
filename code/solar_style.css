@@ -1,0 +1,563 @@
+:root {
+    --glass: rgba(255, 255, 255, 0.15);
+    --blur: blur(20px);
+}
+
+body, html { 
+    margin: 0; 
+    padding: 0; 
+    height: 100%;
+    width: 100%; 
+    overflow: visible; 
+    padding-left: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400; /* Обычное начертание */
+    -webkit-font-smoothing: antialiased; /* Делает шрифт чище */
+}
+
+/* Header */
+header {
+    background-color:#38925D; /* Зеленый с сайта */
+    position: sticky;    /* Фиксируем на экране */
+    top: 1%;               /* Прижимаем к самому верху */
+    border: #2A6D46 /* темно-зеленый с сайта */
+    width: 100%;           /* Ширина прямоугольника */
+    height: 40px;         /* Задаем фиксированную высоту */
+    
+    display: flex;        /* Включаем гибкую верстку */
+    align-items: center;  /* Центрируем текст "Домой" по вертикали */
+    padding: 0 20px;      /* Отступ текста от левого края внутри хедера */
+    box-sizing: border-box; /* Чтобы padding не ломал ширину */
+    z-index: 1000;        /* Чтобы хедер был поверх всех элементов */
+}
+
+.home-link { 
+    font-size: 16px; 
+    color: white;        /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание ссылки */
+    font-weight: bold;
+}
+
+.space {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 650px;
+}
+
+.container { 
+    display: flex;
+    flex-wrap: nowrap; /* Запрещает перенос на новую строку */
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: left;
+    padding: 0 20px; 
+    margin-left: 5px;
+    gap: 10px;         /* Отступ между элементами */
+    width: 100%;       /* Контейнер на всю ширину родителя */
+}
+
+.container > * {
+  flex: 1;           /* Заставляет все элементы быть равного размера */
+  min-width: 0;      /* Критически важно: позволяет элементам сжиматься меньше их контента */
+}
+
+h1 {
+    display: flex;
+    font-size: 1rem;
+    left: 20px;
+    color: white;
+    letter-spacing: 5px; 
+    text-transform: uppercase; 
+    margin-bottom: 20px; 
+    align-items: left; 
+}
+
+.image { 
+    width: 100%; 
+    height: 180px; 
+    border-radius: 20px;
+    object-fit: cover; 
+}
+
+.card-button {
+    background: #38925D;
+    color: white;
+    padding: 8px 10px; 
+    border-radius: 20px;
+    border: 1px solid #000000;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.power {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 300; /* Более тонкое начертание */
+    color: #333;
+    letter-spacing: 0.5px; /* Небольшой отступ между буквами */
+}
+
+.down {
+    display: flex;
+    flex-direction: row;
+    color: #38925D
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.down pr {
+    padding: 8px 10px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Сетка каталога */
+.catalog-grid {
+    display: grid;
+    /* Адаптивная плитка: 3 столбца */
+    grid-template-columns: repeat(3, max-content);
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px 10px; 
+    margin-left: 0;
+    justify-content: start; 
+}
+
+/* Когда ширина экрана меньше 768px (планшеты и телефоны) */
+@media (max-width: 768px) {
+  .catalog-grid {
+    /* Меняем 3 колонки на 1 */
+    grid-template-columns: 1fr;
+    /* Убираем жесткое ограничение рядов, чтобы карточки шли друг за другом */
+    grid-template-rows: auto;
+  }
+}
+
+/* Карточка товара */
+.card { 
+    display: flex;
+    width: 100%;
+    height: 450px; /* Фиксированная высота для всех карточек */
+    background: white; 
+    color: #389250;
+    text-align: center; 
+    flex-direction: column;
+    justify-content: space-between;
+    aspect-ratio: 3/4;
+    border-radius: 10px;
+    min-width: 200px;
+    max-width: 360px;
+    overflow: hidden;
+    border: 1px solid #38925D;
+    transition: outline 0.2s ease; /* Плавное появление */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    
+    /* Внутренний отступ: 10px сверху/снизу и 10px слева/справа */
+    padding: 10px 10px; 
+
+    /* Гарантирует, что padding не увеличит общую ширину карточки */
+    box-sizing: border-box; 
+}
+
+.card img {
+    width: 100%;       /* Растягиваем на всю ширину карточки */
+    height: 240px;     /* Фиксированная высота для всех картинок */
+    object-fit: contain; /* Картинка заполнит область без обрезки */
+    display: block;
+}
+
+.card:hover {
+    transform: scale(1.05); 
+    outline: 1px solid #4a6b5d;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #38925D;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3); /* Затемнение для контраста */
+    backdrop-filter: blur(2px); /* Эффект размытия (vibe) */
+}
+
+.content h1 {
+    font-size: 4rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Контент поверх */
+.overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    height: 100vh;
+    z-index: 10;
+    color: #38925D;
+    text-align: left;
+    position: relative;
+}
+
+/* Карточка корзины */
+.cart-summary {
+    position: sticky;
+    top: 10px;
+    background: #fffae6;
+    border: 2px solid #38925D;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.search-form {
+    display: flex; /* Выстраивает элементы в ряд */
+    width: 100%;
+    gap: 5px;
+    min-width: 150px;
+    max-width: 500px; /* Ограничиваем ширину всей формы */
+    margin-bottom: 10px; /* Отступ снизу, если форма над карточками */
+}
+
+.search-form input {
+    padding: 16px 30px;
+    border: 1px solid #38925D;
+    border-radius: 10px;
+    width: 120px;
+    min-width: 90px;
+    max-width: 450px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300; /* Тонкое начертание */
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.price {
+    font-weight: bolder;
+    background-color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300; /* Тонкое начертание */
+    font-size: 16px;
+    color: #4a6b5d; /* Темно-зеленый оттенок с фото */
+    
+    /* Улучшение отображения шрифта */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Карточка заявки (Корзина) */
+.cart-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 20px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #38925D;
+}
+
+.buttons { display: flex; gap: 20px; }
+
+button {
+    padding: 15px 40px;
+    font-size: 1rem;
+    color:#38925D;
+    cursor: pointer;
+    background-position: center; /* Центрирование изображения */
+    background-size: cover; /* Растягивает с сохранением пропорций, заполняя всё пространство */
+
+    /* Основной эффект стекла */
+    background: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый */
+    backdrop-.filter: blur(10px);          /* Размытие фона под кнопкой */
+    -webkit-backdrop-filter: blur(10px);  /* Поддержка Safari */
+    
+    /* Грань стекла */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;  /* Скругленные углы добавляют мягкости */
+    
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Легкая тень для объема */
+    transition: all 0.4s ease;            /* Плавность при наведении */
+    outline: none;
+}
+
+.button:hover {
+    background: rgba(255, 255, 255, 0.2); /* Чуть светлее при наведении */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);          /* Кнопка "подпрыгивает" */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.img-button {
+   padding: 0;
+   overflow: hidden; /* Чтобы картинка не вылезала за края */
+   flex-shrink: 0;
+}
+
+.img-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ключевое свойство для сохранения пропорций */
+  display: block;
+}
+
+/* Описываем саму анимацию */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(10px); /* Добавляет мягкости при появлении */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* Применяем её к элементам */
+.overlay h1 {
+    opacity: 0; /* Скрыты до начала анимации */
+    animation: fadeInUp 1.5s ease-out forwards;
+}
+
+.buttons {
+    opacity: 0; /* Скрываем кнопки до начала анимации */
+    animation: fadeInUp 1.5s ease-out 0.8s forwards; /* Задержка 0.8s, чтобы кнопки всплыли после текста */
+}
+
+@keyframes scaleSlow {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+    }
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.vibes-video {
+    position: fixed;
+    right: 0; bottom: 0;
+    min-width: 50%; min-height: 100%;
+    z-index: -1;
+    filter: brightness(0.6); /* Приглушаем яркость для "вайба" */
+    width: 90%;
+    height: 100%;
+    object-fit: cover; /* Видео заполняет весь контейнер */
+}
+
+/* Добавим легкое пульсирование для видео, чтобы усилить vibe */
+.vibes-video {
+    animation: scaleSlow 20s infinite alternate;
+} 
+
+/* Оверлей с описанием */
+.vibes-overlay {
+    position: static;
+    z-index: 2;
+    width: 80%;
+    max-width: 600px; 
+    padding: 20px;
+    box-sizing: border-box;
+    /* Темный градиент снизу вверх, чтобы белый текст не сливался с видео */
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+    color: #38925D;
+    font-family: sans-serif;
+}
+ 
+.vibes-title {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    text-align: left;
+    color: white;        /* Цвет текста */
+}
+
+/* Применяем её к элементам */
+.vibes-title {
+    opacity: 0; /* Скрыты до начала анимации */
+    animation: fadeInUp 1.5s ease-out forwards;
+}
+
+.vibes-specs {
+    color: white;        /* Цвет текста */
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    font-weight: bold;
+}
+
+/* Применяем её к элементам */
+.vibes-specs {
+    opacity: 0; /* Скрыты до начала анимации */
+    animation: fadeInUp 3.5s ease-out forwards;
+}
+
+.vibes-description {
+    font-size: 16px;
+    color: white;        /* Цвет текста */
+    display: flex;
+    line-height: 1;
+    opacity: 0.9;
+    gap: 20px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    max-width: 600px;
+    overflow: hidden;
+}
+
+/* Применяем её к элементам */
+.vibes-description {
+    opacity: 0; /* Скрыты до начала анимации */
+    animation: fadeInUp 5.5s ease-out forwards;
+}
+
+/* Применяем её к элементам */
+.vibe-description {
+    opacity: 0; /* Скрыты до начала анимации */
+    animation: fadeInUp 5.5s ease-out forwards;
+}
+
+.btn-order {
+    width: 100%;
+    padding: 15px;
+    background: #38925D;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Стили для страницы заявки */
+.request-summary {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+    padding: 5px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border-left: 5px solid #38925D;
+}
+
+.result-box {
+    display: flex;
+    overflow: hidden;
+    gap: 20px;
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    color: #38925D;
+    flex-direction: row;
+}
+
+.result-box input {
+    width: 70px;
+    padding: 5px;
+    border: 2px solid #eee;
+    background: #fafafa;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.calc-result {
+    font-size: 1.4em;
+    font-weight: bold;
+    display: block;
+}
+
+/* Строка услуги (Flexbox для 1 строки) */
+.request-item-row {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.row-thumb {
+    width: 60px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+
+.row-thumb-card {
+    width: 240px;
+    height: 320px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+
+.header-row-info {
+    flex: 2; /* Занимает основное пространство */
+    display: flex;
+    gap: 60px;
+    padding: 60px;
+    align-items: center;
+}
+
+.row-info {
+    flex: 2; /* Занимает основное пространство */
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.item-name { font-weight: bold; width: 150px; }
+.item-spec { color: #38925D; }
+.item-price { color: #38925D; font-weight: 600; }
+
+/* Блок управления m-m (справа) */
+.row-controls {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    gap: 0px;
+    justify-content: left;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.control-group label {
+    width: 80px;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #38925D;
+    margin-bottom: 4px;
+}
+
+.control-group input {
+    width: 80px;
+    padding: 5px;
+    border: 2px solid #eee;
+    background: #fafafa;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.label {
+    display: inline-block;
+    margin-right: 10px; /* Отступ между ярлыками */
+}

@@ -30,15 +30,19 @@
                     <img src="http://localhost:9000/solar/{{.Equipment.ImageKey}}" class="row-thumb-card" alt="{{.Equipment.ModelName}}">
                     <div>
                         <h2 class="vibes-title">{{.Equipment.ModelName}}</h2>
-                        <p class="vibes-title">Мощность(Вт)/Емкость(Ач): {{.Equipment.CapacityPower}}</p>
+                        {{ if eq .Equipment.Type "power" }}
+                            <p class="vibes-title">Мощность(Вт): {{.Equipment.Power}}</p>
+                        {{else}}
+                            <p class="vibes-title">Емкость(Ач): {{.Equipment.Capacity}}</p>
+                        {{end}}
                         <p class="vibes-title">Цена: {{.Equipment.Price}} ₽</p>
                     
                         <!-- Форма добавления в черновик для ЛР2 -->
                         <form action="/request/add" method="POST" class="add-to-cart-form" width="80px" style="margin-top: 15px;">
                             <!-- Скрытый ID текущего оборудования -->
                             <input type="hidden" name="equipment_id" value="{{.Equipment.ID}}">
-                            <!-- Дефолтный ID заявки (как в базе данных) -->
-                            <input type="hidden" name="request_id" value="101">
+                            <!-- Текущийй ID заявки (как в базе данных) -->
+                            <input type="hidden" name="request_id" value="{{.CurrentRequestID}}">
                             
                             <label for="quantity" width="80px" style="color: #fff; font-size: 14px; margin-right: 5px;">Кол-во:</label>
                             <input type="number" id="quantity" name="quantity" value="1" min="1" width="80px" class="control-group">

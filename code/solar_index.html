@@ -31,7 +31,7 @@
                 </form></a>
                 
                 <!-- Карточка текущей заявки (Корзина) — ведет на обработчик /request/{id} -->
-                <a href="/request/101" class="cart-card">
+                <a href="/request/{{.CurrentRequestID}}" class="cart-card">
                     <strong>Услуг: {{.CartCount}}</strong>
                     <p></p>
                     <button class="img-button"><img src="http://localhost:9000/solar/busket.jpg" alt="Корзина"></button>
@@ -41,10 +41,15 @@
             <!-- Сетка карточек: 3 столбца -->
             <div class="catalog-grid">
                 {{range .Items}}
+                <input type="hidden" name="request_id" value="{{$.CurrentRequestID}}">
                 <div class="card">
                     <img src="http://localhost:9000/solar/{{.ImageKey}}" alt="{{.ModelName}}">
                     <h3>{{.ModelName}}</h3>
-                    <h4>Мощность(Вт)/Емкость(Ач): {{.CapacityPower}}</h4>
+                    {{ if eq .Type "power" }}
+                        <h4>Мощность(Вт): {{.Power}}</h4>
+                    {{else}}
+                        <h4>Емкость(Ач): {{.Capacity}}</h4>
+                    {{end}}
                     <div class="down">
                         <pr class="price">{{.Price}} ₽</pr>
                         <!-- Ссылка на карточку конкретной услуги по ID через GORM -->
